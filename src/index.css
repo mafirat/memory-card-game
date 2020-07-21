@@ -24,3 +24,7 @@ body {
     color: white;
     background-color: #fff0;
 }
+
+.card.clickable{
+    cursor: pointer;
+}
