@@ -1,24 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ToConsole } from './PrintFromJS';
+import { ToConsoleTS } from './PrintFromTS';
+interface IMyObject {
+  name: string,
+  lastName: string | null | number,
+  age?: number
+}
 
 function App() {
+  // let degisken2: string = "Mehmet";
+  // let degisken3: IMyObject;
+  // degisken3 = {
+  //   name: "Mehmet",
+  //   lastName: null,
+  // }
+  ToConsole("Mehmet")
+  ToConsole(29)
+  ToConsole({ isOk: false })
+
+  ToConsoleTS(20)
+  ToConsoleTS(5)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      Hello TypeScript
     </div>
   );
 }
