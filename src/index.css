@@ -4,3 +4,23 @@ body {
     background-color: #434152;
     padding: 25px 0;
 }
+
+.selected {
+    border: 2px solid white;
+    border-radius: 5px;
+    color: white;
+    background-color: #0b486b;
+}
+
+.unmatched {
+    border: 2px solid white;
+    border-radius: 5px;
+    color: white;
+    background-image: radial-gradient(#0b486b, #000);
+}
+
+.matched {
+    border: 0;
+    color: white;
+    background-color: #fff0;
+}
