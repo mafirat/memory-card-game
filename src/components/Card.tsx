@@ -2,9 +2,15 @@ import * as React from 'react';
 import { ICard } from '../Types';
 export interface IProps {
     card: ICard
+    clickHandler: (card: ICard) => void;
 }
 
-const Card: React.FunctionComponent<IProps> = ({ card }) => {
+const Card: React.FunctionComponent<IProps> = ({ card, clickHandler }) => {
+
+    const onClickHandler = () => {
+        card.state = "selected"
+        clickHandler(card)
+    }
     switch (card.state) {
         case "matched":
             return (
@@ -20,7 +26,7 @@ const Card: React.FunctionComponent<IProps> = ({ card }) => {
 
         default:
             return (
-                <div className="card  unmatched mb-3" style={{ height: 185 }}>
+                <div className="card  unmatched mb-3 clickable" style={{ height: 185 }} onClick={onClickHandler}>
                     <div className="card-body text-center" style={{ fontSize: 96 }}>? </div>
                 </div>
             )
