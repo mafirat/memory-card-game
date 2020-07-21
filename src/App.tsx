@@ -1,14 +1,10 @@
 import React from 'react';
-import { Printer } from "./Printer"
-// import { PrinterJS } from './PrinterJS';
+import { CardDeck } from './CardDeck';
+
 const App = () => {
   return (
     <div className="App">
-      Hello TypeScript
-      <hr />
-      <Printer name="Ali" age={22} isActive={true}  />
-      {/* <hr />
-      <PrinterJS  /> */}
+      <CardDeck />
     </div>
   );
 }
