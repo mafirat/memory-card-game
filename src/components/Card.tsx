@@ -21,7 +21,7 @@ const Card: React.FunctionComponent<IProps> = ({ card, clickHandler }) => {
         case "selected":
             return (
                 <div className="card  selected mb-3" style={{ height: 185 }}>
-                    <div className="card-body text-center" style={{ fontSize: 96 }}>{card.content} </div>
+                    <div className="card-body text-center" style={{ fontSize: 88 }}> <i className={`fas fa-${card.content}`}></i> </div>
                 </div >);
 
         default:

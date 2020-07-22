@@ -44,4 +44,7 @@ export const data: ICard[] = [
 ]
 
 export const letters: string[] = [
-    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P"]
+    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P"];
+
+export const animals: string[] = ["cat", "crow", "dog", "dove", "dragon", "feather", "feather-alt", "fish", "frog",
+    "hippo", "horse", "horse-head", "kiwi-bird", "otter", "paw", "spider"]
