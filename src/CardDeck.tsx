@@ -20,6 +20,7 @@ class CardDeck extends React.Component<{}, IState> {
     selectedCardIds: number[] = [];
     selectedCards: ICard[] = [];
     difficulty = Difficulty.easy;
+    isFinished: boolean = false;
     state: IState = {
         cards: generateRandomCards(this.difficulty),
         count: 0,
@@ -57,8 +58,28 @@ class CardDeck extends React.Component<{}, IState> {
                     ...this.state,
                     count: count + 1,
                     cards: newCards
-                });
+                }, this.checkIsFinished);
             }, 500);
+        }
+    }
+    checkIsFinished = () => {
+        if (this.state.cards.every(a => a.state === "matched")) {
+            this.isFinished = true;
+            const { bestScore, count } = this.state;
+            const bestVal = bestScore[Difficulty[this.difficulty]];
+            const newbestScore = { ...bestScore };
+            if (bestVal) {
+                if (count < bestVal) {
+                    newbestScore[Difficulty[this.difficulty]] = count
+                }
+            } else {
+                newbestScore[Difficulty[this.difficulty]] = count
+            }
+            localStorage.setItem("score", JSON.stringify(newbestScore));
+            this.setState({
+                ...this.state,
+                bestScore: newbestScore
+            })
         }
     }
     reset = () => {
@@ -81,8 +102,16 @@ class CardDeck extends React.Component<{}, IState> {
             count: 0
         })
     }
+
+    finished = () => (
+        < div className="card finished">
+            <div className="card-body text-center">
+                Oyun Bitti. Skor: {this.state.count}
+            </div>
+        </div >
+    )
     render() {
-        const { count, cards, bestScore} = this.state;
+        const { count, cards, bestScore } = this.state;
         const cardList = cards.map(c => (<Card key={c.id} card={{ ...c }} clickHandler={this.cardClickHandler} />))
         const columnCount = configDifficulty[Difficulty[this.difficulty]].column;
         return (
@@ -92,15 +121,17 @@ class CardDeck extends React.Component<{}, IState> {
                     <div className="col"><span className="text-white">En iyi Skor:{bestScore[Difficulty[this.difficulty]]}</span></div>
                 </div>
                 <hr />
-                <div className="card-columns" style={{ columnCount }}>
-                    {
-                        cardList
-                    }
-                </div>
+                {
+                    this.isFinished ? (this.finished()) : (<div className="card-columns" style={{ columnCount }}>
+                        {
+                            cardList
+                        }
+                    </div>)
+                }
                 <hr />
                 <div className="d-flex justify-content-center">
-                    <button onClick={this.reset} className="btn btn-primary mr-3">Sıfırla</button>
-                    <Menu setDiffHandler={this.setDifficulty} />
+                    <button onClick={this.reset} className="btn btn-primary mr-3" disabled={(count < 1)}>Sıfırla</button>
+                    <Menu isDisabled={(count > 0)} setDiffHandler={this.setDifficulty} currentDiflevel={this.difficulty} />
                 </div>
 
             </div>);
