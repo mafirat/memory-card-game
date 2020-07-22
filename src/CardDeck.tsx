@@ -3,15 +3,21 @@ import { Card } from './components/Card';
 import { ICard, cardState } from './Types';
 import _ from "lodash";
 import { data } from './data';
+import { generateRandomCards } from './helper';
 interface IState {
     cards: ICard[];
     count: number;
 }
+// TO DO: Random Kart oluşturma
+// TO DO: Zorluk
+// TO DO: Best Score
+
 class CardDeck extends React.Component<{}, IState> {
     selectedCardIds: number[] = [];
     selectedCards: ICard[] = [];
+    difficulty: number = 7;
     state: IState = {
-        cards: _.cloneDeep(data),
+        cards: generateRandomCards(this.difficulty),
         count: 0
     }
     cardClickHandler = (card: ICard) => {
@@ -55,23 +61,33 @@ class CardDeck extends React.Component<{}, IState> {
         this.selectedCards = []
         this.setState({
             ...this.state,
-            cards: _.cloneDeep(data)
+            cards: generateRandomCards(this.difficulty),
+            count: 0
         })
     }
     render() {
         const { count, cards } = this.state;
         const cardList = cards.map(c => (<Card key={c.id} card={{ ...c }} clickHandler={this.cardClickHandler} />))
+        const columnCount = cards.length === 14 ? 7 : 3
         return (
             <div className="container p-3 bg-dark">
                 <span className="text-white">Hamle:{count}</span>
                 <hr />
-                <div className="card-columns" style={{ columnCount: 4 }}>
+                <div className="card-columns" style={{ columnCount }}>
                     {
                         cardList
                     }
                 </div>
                 <hr />
-                <button onClick={this.reset} className="btn btn-primary">Sıfırla</button>
+                <div className="d-flex justify-content-center">
+                    <button onClick={this.reset} className="btn btn-primary mr-3">Sıfırla</button>
+                    <div className="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" className="btn btn-outline-success">Kolay</button>
+                        <button type="button" className="btn btn-outline-warning">Orta</button>
+                        <button type="button" className="btn btn-outline-danger">Zor</button>
+                    </div>
+                </div>
+
             </div>);
     }
 }
