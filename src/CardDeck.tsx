@@ -130,7 +130,7 @@ class CardDeck extends React.Component<{}, IState> {
                 }
                 <hr />
                 <div className="d-flex justify-content-center">
-                    <button onClick={this.reset} className="btn btn-primary mr-3" disabled={(count < 1)}>Sıfırla</button>
+                    <button onClick={this.reset} className="btn btn-primary mr-3" disabled={(count < 1)}>Sıfırla <i className="fas fa-undo"></i> </button>
                     <Menu isDisabled={(count > 0)} setDiffHandler={this.setDifficulty} currentDiflevel={this.difficulty} />
                 </div>
 
