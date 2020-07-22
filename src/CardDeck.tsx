@@ -7,6 +7,7 @@ interface IState {
 }
 class CardDeck extends React.Component<{}, IState> {
     selectedCardIds: number[] = [];
+    selectedCards: ICard[] = [];
     state: IState = {
         cards: data
     }
@@ -14,12 +15,41 @@ class CardDeck extends React.Component<{}, IState> {
         const { cards } = this.state;
         if (this.selectedCardIds.length < 2) {
             this.selectedCardIds.push(card.id);
+            this.selectedCards.push(card);
             this.setState({
                 ...this.state,
                 cards: cards.map(c => c.id === card.id ? card : c)
             })
+            setTimeout(() => {
+                if (this.selectedCardIds.length === 2) {
+                    let newCards: ICard[] = [];
+                    if (this.selectedCards[0].content === this.selectedCards[1].content) {
+                        newCards = cards.map(c => {
+                            if (this.selectedCardIds.includes(c.id)) {
+                                c.state = "matched"
+                            }
+                            return c;
+                        })
+                    }
+                    else {
+                        newCards = cards.map(c => {
+                            if (this.selectedCardIds.includes(c.id)) {
+                                c.state = "unmatched"
+                            }
+                            return c;
+                        })
+                    }
+                    this.selectedCardIds = [];
+                    this.selectedCards = []
+                    this.setState({
+                        ...this.state,
+                        cards: newCards
+                    });
+                }
+            }, 500);
         }
     }
+
     render() {
         const cardList = this.state.cards.map(c => (<Card key={c.id} card={c} clickHandler={this.cardClickHandler} />))
         return (
