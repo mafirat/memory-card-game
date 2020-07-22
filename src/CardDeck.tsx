@@ -5,12 +5,14 @@ import _ from "lodash";
 import { data } from './data';
 interface IState {
     cards: ICard[];
+    count: number;
 }
 class CardDeck extends React.Component<{}, IState> {
     selectedCardIds: number[] = [];
     selectedCards: ICard[] = [];
     state: IState = {
-        cards: _.cloneDeep(data)
+        cards: _.cloneDeep(data),
+        count: 0
     }
     cardClickHandler = (card: ICard) => {
         const { cards } = this.state;
@@ -25,7 +27,7 @@ class CardDeck extends React.Component<{}, IState> {
     }
     checkMatch = () => {
         if (this.selectedCardIds.length === 2) {
-            const { cards } = this.state;
+            const { cards, count } = this.state;
             setTimeout(() => {
                 let newCards: ICard[] = [];
                 let nextState: cardState = "unmatched";
@@ -42,14 +44,13 @@ class CardDeck extends React.Component<{}, IState> {
                 this.selectedCards = []
                 this.setState({
                     ...this.state,
+                    count: count + 1,
                     cards: newCards
                 });
-            }, 3000);
+            }, 500);
         }
     }
     reset = () => {
-        console.log("reset");
-
         this.selectedCardIds = [];
         this.selectedCards = []
         this.setState({
@@ -58,11 +59,12 @@ class CardDeck extends React.Component<{}, IState> {
         })
     }
     render() {
-        console.table(data);
-
-        const cardList = this.state.cards.map(c => (<Card key={c.id} card={c} clickHandler={this.cardClickHandler} />))
+        const { count, cards } = this.state;
+        const cardList = cards.map(c => (<Card key={c.id} card={{ ...c }} clickHandler={this.cardClickHandler} />))
         return (
             <div className="container p-3 bg-dark">
+                <span className="text-white">Hamle:{count}</span>
+                <hr />
                 <div className="card-columns" style={{ columnCount: 4 }}>
                     {
                         cardList
