@@ -42,3 +42,6 @@ export const data: ICard[] = [
         state: "unmatched"
     },
 ]
+
+export const letters: string[] = [
+    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P"]
