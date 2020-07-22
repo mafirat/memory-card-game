@@ -25,10 +25,18 @@ body {
     background-color: #fff0;
 }
 
-.card.clickable{
+.card.clickable {
     cursor: pointer;
 }
 
-hr{
+hr {
     border-top: 2px dashed white;
+}
+
+.finished {
+    background-color: #f5cb5c;
+    margin: 13% 0;
+    font-size: 36px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
