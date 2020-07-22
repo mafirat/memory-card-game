@@ -1,6 +1,6 @@
 import { letters } from "./data"
 import _ from "lodash";
-import { ICard } from "./Types";
+import { ICard, IBestScore } from "./Types";
 
 export const generateRandomCards = (size: number) => {
     const sliced = letters.slice(0, size);
@@ -13,7 +13,13 @@ export const generateRandomCards = (size: number) => {
             state: "unmatched"
         }
     })
-    console.log(mapped);
-    
     return mapped;
+}
+
+export const getBestScoreFromLocal = () => {
+    const data = localStorage.getItem("score");
+    if (data) {
+        return JSON.parse(data) as IBestScore;
+    }
+    return { easy: null, normal: null, hard: null }
 }

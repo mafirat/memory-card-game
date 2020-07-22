@@ -1,12 +1,16 @@
 import * as React from 'react';
 import { Card } from './components/Card';
-import { ICard, cardState } from './Types';
+import { ICard, cardState, Difficulty, IBestScore } from './Types';
 import _ from "lodash";
 import { data } from './data';
-import { generateRandomCards } from './helper';
+import { generateRandomCards, getBestScoreFromLocal } from './helper';
+import { Menu } from './components/DifficultyMenu';
+import { config } from 'process';
+import { configDifficulty } from './configDifficulty';
 interface IState {
     cards: ICard[];
     count: number;
+    bestScore: IBestScore;
 }
 // TO DO: Random Kart oluşturma
 // TO DO: Zorluk
@@ -15,10 +19,11 @@ interface IState {
 class CardDeck extends React.Component<{}, IState> {
     selectedCardIds: number[] = [];
     selectedCards: ICard[] = [];
-    difficulty: number = 7;
+    difficulty = Difficulty.easy;
     state: IState = {
         cards: generateRandomCards(this.difficulty),
-        count: 0
+        count: 0,
+        bestScore: getBestScoreFromLocal()
     }
     cardClickHandler = (card: ICard) => {
         const { cards } = this.state;
@@ -65,13 +70,27 @@ class CardDeck extends React.Component<{}, IState> {
             count: 0
         })
     }
+    setDifficulty = (difficulty: Difficulty) => {
+        this.difficulty = difficulty;
+
+        this.selectedCardIds = [];
+        this.selectedCards = []
+        this.setState({
+            ...this.state,
+            cards: generateRandomCards(this.difficulty),
+            count: 0
+        })
+    }
     render() {
-        const { count, cards } = this.state;
+        const { count, cards, bestScore} = this.state;
         const cardList = cards.map(c => (<Card key={c.id} card={{ ...c }} clickHandler={this.cardClickHandler} />))
-        const columnCount = cards.length === 14 ? 7 : 3
+        const columnCount = configDifficulty[Difficulty[this.difficulty]].column;
         return (
             <div className="container p-3 bg-dark">
-                <span className="text-white">Hamle:{count}</span>
+                <div className="d-flex justify-content-between">
+                    <div className="col"><span className="text-white">Hamle:{count}</span></div>
+                    <div className="col"><span className="text-white">En iyi Skor:{bestScore[Difficulty[this.difficulty]]}</span></div>
+                </div>
                 <hr />
                 <div className="card-columns" style={{ columnCount }}>
                     {
@@ -81,11 +100,7 @@ class CardDeck extends React.Component<{}, IState> {
                 <hr />
                 <div className="d-flex justify-content-center">
                     <button onClick={this.reset} className="btn btn-primary mr-3">Sıfırla</button>
-                    <div className="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" className="btn btn-outline-success">Kolay</button>
-                        <button type="button" className="btn btn-outline-warning">Orta</button>
-                        <button type="button" className="btn btn-outline-danger">Zor</button>
-                    </div>
+                    <Menu setDiffHandler={this.setDifficulty} />
                 </div>
 
             </div>);
