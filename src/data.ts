@@ -3,7 +3,7 @@ import { ICard } from "./Types";
 export const data: ICard[] = [
     {
         id: 1,
-        content: "A",
+        content: "D",
         state: "unmatched"
     },
     {
@@ -13,11 +13,31 @@ export const data: ICard[] = [
     },
     {
         id: 3,
-        content: "B",
+        content: "C",
         state: "unmatched"
     },
     {
         id: 4,
+        content: "A",
+        state: "unmatched"
+    },
+    {
+        id: 5,
+        content: "C",
+        state: "unmatched"
+    },
+    {
+        id: 6,
+        content: "B",
+        state: "unmatched"
+    },
+    {
+        id: 7,
+        content: "D",
+        state: "unmatched"
+    },
+    {
+        id: 8,
         content: "A",
         state: "unmatched"
     },
