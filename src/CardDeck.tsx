@@ -85,6 +85,7 @@ class CardDeck extends React.Component<{}, IState> {
     reset = () => {
         this.selectedCardIds = [];
         this.selectedCards = []
+        this.isFinished = false;
         this.setState({
             ...this.state,
             cards: generateRandomCards(this.difficulty),
@@ -93,7 +94,7 @@ class CardDeck extends React.Component<{}, IState> {
     }
     setDifficulty = (difficulty: Difficulty) => {
         this.difficulty = difficulty;
-
+        this.isFinished = false;
         this.selectedCardIds = [];
         this.selectedCards = []
         this.setState({
