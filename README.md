@@ -15,5 +15,3 @@ yarn start
 // ya da
 npm start
 ```
-
-Repositorydeki her bir branch, eğitimdeki videolar ile eşleşmektedir. her bir video sonundaki halini aynı index isimli branch ile ulaşabilirsiniz.
